@@ -29,7 +29,7 @@ The `agent-coder` agent works from **a GitHub Issue**. It is not given a prompt:
 Check these before dispatching, and stop with a clear message if one is missing:
 
 - `GALE_DISPATCHER_API_ENDPOINT` environment variable is set
-- The auth token is in the macOS Keychain under service `tome-ms-language-api-dev`, account `token`. Verify without printing it: `security find-generic-password -s "tome-ms-language-api-dev" -a "token" >/dev/null`. Override the service name with `GALE_DISPATCHER_TOKEN_SERVICE` if the user keeps the token elsewhere.
+- The toto auth token is in the macOS Keychain under service `toto-auth-token-dev`, account `token`. Verify without printing it: `security find-generic-password -s "toto-auth-token-dev" -a "token" >/dev/null`. This is the shared toto dev token, not a dispatcher-specific one — the same entry serves any toto API.
 - `gh` is authenticated for the repo the issue lives in.
 
 **Never print, log or echo the token**, and never pass it as a command-line argument. Only the script reads it, and it reads it straight from the Keychain.
@@ -103,7 +103,7 @@ Show the status and the response body, and read it against what the dispatcher d
 | Code | Meaning | What to do |
 | ---- | ------- | ---------- |
 | `400` | The body is not a JSON object, or a required field (`repoURL`, `issueURL`) is missing or blank. The response names every missing field. | Fix the payload and retry. |
-| `401` | The token is missing, expired or not accepted. | Ask the user to refresh the Keychain entry. Do not attempt to mint a token. |
+| `401` | The token is missing, expired or not accepted. | Ask the user to refresh the `toto-auth-token-dev` Keychain entry. Do not attempt to mint a token. |
 | `404` | No agent registered under `agent-coder`. | Report it — this is a dispatcher-side configuration issue. |
 | `500` | The Task File could not be written, or the Cloud Run Job could not be started. | The task is recorded as `failed_to_start`. Retrying is safe but mints a **new** `taskId` — the endpoint has no idempotency key, so never retry silently. Ask first. |
 

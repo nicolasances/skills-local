@@ -15,14 +15,14 @@
 #
 # Environment:
 #   GALE_DISPATCHER_API_ENDPOINT   Required. Base URL of the dispatcher, including its `/dispatcher` base path.
-#   GALE_DISPATCHER_TOKEN_SERVICE  Optional. macOS Keychain service holding the auth token.
-#                                  Defaults to `tome-ms-language-api-dev`, account `token`.
+#   TOTO_AUTH_TOKEN_SERVICE        Optional. macOS Keychain service holding the toto auth token.
+#                                  Defaults to `toto-auth-token-dev`, account `token`.
 #
 # Exit codes: 0 = dispatched (2xx), 1 = usage or configuration error, 2 = the API refused the dispatch.
 
 set -euo pipefail
 
-KEYCHAIN_SERVICE="${GALE_DISPATCHER_TOKEN_SERVICE:-tome-ms-language-api-dev}"
+KEYCHAIN_SERVICE="${TOTO_AUTH_TOKEN_SERVICE:-toto-auth-token-dev}"
 KEYCHAIN_ACCOUNT="token"
 
 ISSUE_URL=""
